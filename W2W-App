@@ -1,0 +1,135 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+export default function W2WApp() {
+  const [tab, setTab] = useState("schedule");
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const handleSend = () => {
+    if (message.trim()) {
+      setMessages([...messages, message]);
+      setMessage("");
+    }
+  };
+
+  return (
+    <div className="p-4 max-w-5xl mx-auto">
+      <h1 className="text-4xl font-bold mb-4 text-center text-purple-700">Women2Women International Leadership Program</h1>
+      <Tabs value={tab} onValueChange={setTab} className="w-full">
+        <TabsList className="grid grid-cols-6 gap-2 mb-4">
+          <TabsTrigger value="schedule">Schedule</TabsTrigger>
+          <TabsTrigger value="speakers">Speakers</TabsTrigger>
+          <TabsTrigger value="resources">Resources</TabsTrigger>
+          <TabsTrigger value="about">About</TabsTrigger>
+          <TabsTrigger value="gallery">Gallery</TabsTrigger>
+          <TabsTrigger value="chat">Chat</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="schedule">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">Daily Schedule</h2>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>9:00 AM - Opening Remarks</li>
+                  <li>10:00 AM - Keynote Speaker</li>
+                  <li>11:30 AM - Breakout Sessions</li>
+                  <li>1:00 PM - Lunch</li>
+                  <li>2:00 PM - Leadership Workshop</li>
+                  <li>4:00 PM - Community Reflection</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="speakers">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">Featured Speakers</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><strong>Dr. Jane Smith</strong> – Global Health Advocate</li>
+                  <li><strong>Amb. Maria Gomez</strong> – U.N. Diplomat</li>
+                  <li><strong>Aria Patel</strong> – Founder, Girls in STEM</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="resources">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">Program Resources</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><a href="#" className="text-blue-600 underline">Leadership Toolkit (PDF)</a></li>
+                  <li><a href="#" className="text-blue-600 underline">Speaker Bios</a></li>
+                  <li><a href="#" className="text-blue-600 underline">Session Recordings</a></li>
+                  <li><a href="#" className="text-blue-600 underline">QR Check-In Form</a></li>
+                  <li><a href="#" className="text-blue-600 underline">Interactive Campus Map</a></li>
+                </ul>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="about">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">About the Program</h2>
+                <p className="mb-2">
+                  The Women2Women International Leadership Program brings together inspiring young women from around the globe to build leadership skills, foster global friendships, and empower each other to become change-makers in their communities.
+                </p>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="gallery">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">Photo Gallery</h2>
+                <p className="mb-2">Participants can upload and view photos from the program here.</p>
+                <Button className="mb-2">Upload Photo</Button>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="bg-gray-200 h-32 rounded-xl">Photo 1</div>
+                  <div className="bg-gray-200 h-32 rounded-xl">Photo 2</div>
+                  <div className="bg-gray-200 h-32 rounded-xl">Photo 3</div>
+                </div>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="chat">
+          <ScrollArea className="h-96">
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-2xl font-semibold mb-2">Live Chat</h2>
+                <div className="bg-gray-100 p-2 mb-2 h-48 overflow-y-scroll rounded-lg">
+                  {messages.map((msg, idx) => (
+                    <div key={idx} className="mb-1 text-sm">{msg}</div>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <Input value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type your message..." />
+                  <Button onClick={handleSend}>Send</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </ScrollArea>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
